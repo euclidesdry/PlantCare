@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     SafeAreaView,
     View,
@@ -6,8 +6,10 @@ import {
     TextInput,
     Image,
     KeyboardAvoidingView,
+    TouchableWithoutFeedback,
     Platform,
-    StyleSheet
+    StyleSheet,
+    Keyboard
 } from 'react-native';
 
 // styles
@@ -16,12 +18,15 @@ import fonts from "../styles/fonts";
 
 // Components
 import { Button } from './../components/Button';
+import { useNavigation } from '@react-navigation/core';
 
 export function UserIdentification() {
 
     const [isFocused, setIsFocused] = useState(false);
     const [isFilled, setIsFilled] = useState(false);
-    const [name, setName] = useState<string>()
+    const [name, setName] = useState<string>();
+
+    const navigation = useNavigation();
     
     function handleInputBlur() {
         setIsFocused(false);
@@ -37,41 +42,53 @@ export function UserIdentification() {
         setName(value)
     }
 
+    function handleConfirmation() {
+        navigation.navigate('Confirmation');
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
                 style={styles.container}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
-                <View style={styles.content}>
-                    <View style={styles.form}>
-                        <View style={styles.header}>
-                            <Text style={styles.emoji}>
-                                { (!isFilled) ? '😄': '😃'}
-                            </Text>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style={styles.content}>
+                        <View style={styles.form}>
+                            <View style={styles.header}>
+                                <Text style={styles.emoji}>
+                                    { (!isFilled) ? '😄': '😃'}
+                                </Text>
 
-                            <Text style={styles.title}>
-                                Qual é o Seu Nome?
-                            </Text>
-                        </View>
+                                <Text style={styles.title}>
+                                    Qual é o Seu Nome?
+                                </Text>
+                            </View>
 
-                        <TextInput
-                            style={[
-                                styles.input,
-                                (isFocused || isFilled) &&
-                                { borderColor: colors.green}
-                            ]}
-                            placeholder="Escreva o seu nome"
-                            onBlur={handleInputBlur}
-                            onFocus={handleInputFocus}
-                            onChangeText={handleInputChange}
-                        />
+                            <TextInput
+                                style={[
+                                    styles.input,
+                                    (isFocused || isFilled) &&
+                                    { borderColor: colors.green}
+                                ]}
+                                placeholder="Escreva o seu nome"
+                                onBlur={handleInputBlur}
+                                onFocus={handleInputFocus}
+                                onChangeText={handleInputChange}
+                            />
 
-                        <View style={styles.footer}>
-                            <Button title="Continuar"/>
+                            <View style={styles.footer}>
+                                <Button
+                                    title="Confirmar"
+                                    onPress={() => {
+                                        (isFilled) ? handleConfirmation() : alert('Escreva o seu nome e clica no "OK" para continuar!');
+                                    }}
+                                    accessible={isFilled}
+                                />
+                            </View>
                         </View>
                     </View>
-                </View>
+                </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
         </SafeAreaView>
     )
