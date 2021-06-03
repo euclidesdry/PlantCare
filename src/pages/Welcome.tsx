@@ -5,38 +5,45 @@ import {
     Text,
     Image,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    Dimensions
 } from 'react-native';
 
+import { Feather } from '@expo/vector-icons';
+
+// Assets
 import wateringImg from '../assets/watering.png';
 import colors from '../styles/colors';
-
-// Components
-import { Button } from '../components/Button';
+import fonts from '../styles/fonts';
 
 export function Welcome() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>Cuide facilmente as suas Plantas.</Text>
+            <View style={styles.wrapper}>
+                <Text style={styles.title}>Cuide atenciosamente {'\n'} das suas Plantas.</Text>
 
-            <View style={styles.imageContainer}>
-                <Image source={wateringImg} style={styles.image}/>
-            </View>
+                <Image 
+                    source={wateringImg}
+                    style={styles.image}
+                    resizeMode="contain"
+                />
 
-            <Text style={styles.subtitle}>
-                Não esqueça mais de regar suas plantas.
-                Nós cuidamos de lembrar você sempre que precisar.
-            </Text>
-
-            <TouchableOpacity
-                style={styles.button}
-                activeOpacity={0.7}
-            >
-                <Text style={styles.buttonText}>
-                    >
+                <Text style={styles.subtitle}>
+                    Não esqueça mais de regar suas plantas. {'\n'}
+                    Nós cuidamos de lembrar você sempre que precisar.
                 </Text>
-            </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.button}
+                    activeOpacity={0.7}
+                >
+                    <Feather 
+                        name="chevron-right"
+                        style={styles.buttonIcon}
+                    />
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     )
 }
@@ -44,43 +51,45 @@ export function Welcome() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    wrapper: {
+        flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-around',
+        paddingHorizontal: 20
     },
     title: {
-        fontSize: 32,
+        fontSize: 28,
         fontWeight: 'bold',
         textAlign: 'center',
         color: colors.heading,
-        marginTop: 78
+        marginTop: 78,
+        fontFamily: fonts.heading,
+        lineHeight: 34
     },
     subtitle: {
         textAlign: 'center',
         fontSize: 18,
         paddingHorizontal: 30,
-        color: colors.heading
-    },
-    imageContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        color: colors.heading,
+        fontFamily: fonts.text
     },
     image: {
-        width: 292
+        height: Dimensions.get("window").width * 0.7
     },
     button: {
         backgroundColor: colors.green,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 8,
+        borderRadius: 16,
         marginBottom: 18,
         marginTop: 18,
-        paddingHorizontal: 16,
+        paddingHorizontal: 10,
         height: 58,
         width: 58
     },
-    buttonText: {
-        color: colors.white,
-        fontSize: 24
+    buttonIcon: {
+        fontSize: 38,
+        color: colors.white
     }
 })
