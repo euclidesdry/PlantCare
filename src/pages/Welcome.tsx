@@ -5,7 +5,7 @@ import wateringImg from '../assets/watering.png';
 import colors from '../styles/colors';
 
 // Components
-import { Button } from './../components/Button';
+import { Button } from '../components/Button';
 
 export function Welcome() {
     const [visible, setVisible] = useState(false);
