@@ -5,13 +5,15 @@ import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
+// Components
+import { Header } from '../components/Header';
+
 export function PlantSelect() {
     return (
-        <SafeAreaView>
-            <View>
-                <Text> Selecionar Planta </Text>
-            </View>
-        </SafeAreaView>
+        <View style={styles.container}>
+            <Header />
+            <Text> Selecionar Planta </Text>
+        </View>
     )
 }
 
