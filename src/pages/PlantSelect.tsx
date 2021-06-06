@@ -3,6 +3,7 @@ import {
     SafeAreaView,
     View,
     Text,
+    FlatList,
     StyleSheet
 } from 'react-native';
 
@@ -12,6 +13,7 @@ import fonts from '../styles/fonts';
 
 // Components
 import { Header } from '../components/Header';
+import { EnviromentButton } from './../components/EnviromentButton';
 
 export function PlantSelect() {
     return (
@@ -24,6 +26,22 @@ export function PlantSelect() {
                 <Text style={styles.subtitle}>
                     você quer colocar sua planta?
                 </Text>
+            </View>
+
+            <View style={{flex: 1}}>
+                <FlatList
+                    data={[1, 2, 3, 4, 5]}
+                    renderItem={({ item }) => (
+                        <EnviromentButton
+                            key={item}
+                            title={"Cozinha"}
+                            active
+                        />
+                    )}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.enviromentList}
+                />
             </View>
         </View>
     )
@@ -49,5 +67,12 @@ const styles = StyleSheet.create({
         fontSize: 17,
         lineHeight: 20,
         color: colors.heading
+    },
+    enviromentList: {
+        height: 40,
+        justifyContent: 'center',
+        paddingBottom: 5,
+        marginLeft: 32,
+        marginVertical: 32
     }
 })
