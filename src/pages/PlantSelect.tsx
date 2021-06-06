@@ -16,7 +16,15 @@ import { Header } from '../components/Header';
 export function PlantSelect() {
     return (
         <View style={styles.container}>
-            <Header />
+            <View style={styles.header}>
+                <Header />
+                <Text style={styles.title}>
+                    Em qual ambiente
+                </Text>
+                <Text style={styles.subtitle}>
+                    você quer colocar sua planta?
+                </Text>
+            </View>
         </View>
     )
 }
@@ -25,5 +33,21 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.background
+    },
+    header: {
+        paddingHorizontal: 30
+    },
+    title: {
+        fontSize: 17,
+        color: colors.heading,
+        fontFamily: fonts.heading,
+        lineHeight: 20,
+        marginTop: 15
+    },
+    subtitle: {
+        fontFamily: fonts.text,
+        fontSize: 17,
+        lineHeight: 20,
+        color: colors.heading
     }
 })
