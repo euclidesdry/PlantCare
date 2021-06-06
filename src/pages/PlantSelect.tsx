@@ -14,6 +14,7 @@ import fonts from '../styles/fonts';
 // Components
 import { Header } from '../components/Header';
 import { EnviromentButton } from './../components/EnviromentButton';
+import { PlantCardPrimay } from './../components/PlantCardPrimary';
 
 //API's
 import api from '../services/api';
@@ -22,10 +23,23 @@ interface EnviromentProps {
     key: string;
     title: string;
 }
+interface PlantsProps {
+    id: string;
+    name: string;
+    about: string;
+    water_tips: string;
+    photo: string;
+    environments: [string];
+    frequency: {
+        times: number,
+        repeat_every: string
+    };
+}
 
 export function PlantSelect() {
 
     const [enviroments, setEnviroments] = useState<EnviromentProps[]>([]);
+    const [plants, setPlants] = useState<PlantsProps[]>([]);
 
     useEffect(() => {
         async function fetchEnviroment() {
@@ -43,6 +57,16 @@ export function PlantSelect() {
         fetchEnviroment();
     }, []);
 
+    useEffect(() => {
+        async function fetchPlants() {
+            const { data } = await api.get('plants');
+
+            setPlants(data);
+        }
+
+        fetchPlants();
+    }, []);
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -55,7 +79,7 @@ export function PlantSelect() {
                 </Text>
             </View>
 
-            <View style={{flex: 1}}>
+            <View>
                 <FlatList
                     data={enviroments}
                     renderItem={({ item }) => (
@@ -68,6 +92,18 @@ export function PlantSelect() {
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.enviromentList}
+                />
+            </View>
+
+            <View style={styles.plants}>
+                <FlatList
+                    data={plants}
+                    renderItem={({ item }) => (
+                        <PlantCardPrimay data={item}/>
+                    )}
+                    showsVerticalScrollIndicator={false}
+                    numColumns={2}
+                    contentContainerStyle={styles.contentContainerStyle}
                 />
             </View>
         </View>
@@ -101,5 +137,13 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
         paddingLeft: 32,
         marginVertical: 32
+    },
+    plants: {
+        flex: 1,
+        paddingHorizontal: 32,
+        justifyContent: 'center'
+    },
+    contentContainerStyle: {
+    
     }
 })
