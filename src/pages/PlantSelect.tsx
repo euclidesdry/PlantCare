@@ -40,10 +40,24 @@ export function PlantSelect() {
 
     const [enviroments, setEnviroments] = useState<EnviromentProps[]>([]);
     const [plants, setPlants] = useState<PlantsProps[]>([]);
+    const [filteredPlants, setFilteredPlants] = useState<PlantsProps[]>([]);
+    const [enviromentSelected, setEnviromentSelected] = useState('all');
+
+    function handleEnviromentSelected(environment: string) {
+        setEnviromentSelected(environment);
+
+        if (environment == 'all')
+            return setFilteredPlants(plants);
+        
+        const filtered = plants.filter(plant => plant.environments.includes(environment));
+        
+        setFilteredPlants(filtered);
+    }
 
     useEffect(() => {
         async function fetchEnviroment() {
-            const { data } = await api.get('plants_environments');
+            const { data } = await api
+            .get('plants_environments?_sort=title&_order=asc'); // Requisition with sort and order
 
             setEnviroments([
                 {
@@ -55,17 +69,19 @@ export function PlantSelect() {
         }
 
         fetchEnviroment();
-    }, []);
+    }, []); // API Request Plants Environments
 
     useEffect(() => {
         async function fetchPlants() {
-            const { data } = await api.get('plants');
+            const { data } = await api
+            .get('plants?_sort=name&_order=asc'); // requisition with sort and order
 
             setPlants(data);
+            setFilteredPlants(data);
         }
 
         fetchPlants();
-    }, []);
+    }, []); // API Request Plants
 
     return (
         <View style={styles.container}>
@@ -86,7 +102,8 @@ export function PlantSelect() {
                         <EnviromentButton
                             key={item.key}
                             title={item.title}
-                            active={false}
+                            active={item.key === enviromentSelected}
+                            onPress={() => handleEnviromentSelected(item.key)}
                         />
                     )}
                     horizontal
@@ -97,7 +114,7 @@ export function PlantSelect() {
 
             <View style={styles.plants}>
                 <FlatList
-                    data={plants}
+                    data={filteredPlants}
                     renderItem={({ item }) => (
                         <PlantCardPrimay data={item}/>
                     )}
