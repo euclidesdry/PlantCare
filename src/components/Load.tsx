@@ -3,14 +3,14 @@ import { View, StyleSheet } from "react-native";
 
 import LottieView from 'lottie-react-native';
 
-import loadAnimation from '../assets/eco-loading.json';
+import loadAnimation from '../assets/load.json';
 
 export function Load() {
   return (
     <View style={styles.container}>
       <LottieView
         source={loadAnimation}
-        autoplay
+        autoPlay
         loop
         style={styles.animation}
       />
@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   animation: {
+    width: 400,
+    height: 400,
     backgroundColor: 'transparent'
   }
 })

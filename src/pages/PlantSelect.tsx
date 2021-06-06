@@ -15,6 +15,7 @@ import fonts from '../styles/fonts';
 import { Header } from '../components/Header';
 import { EnviromentButton } from './../components/EnviromentButton';
 import { PlantCardPrimay } from './../components/PlantCardPrimary';
+import { Load } from '../components/Load';
 
 //API's
 import api from '../services/api';
@@ -42,6 +43,7 @@ export function PlantSelect() {
     const [plants, setPlants] = useState<PlantsProps[]>([]);
     const [filteredPlants, setFilteredPlants] = useState<PlantsProps[]>([]);
     const [enviromentSelected, setEnviromentSelected] = useState('all');
+    const [loading, setLoading] = useState(true);
 
     function handleEnviromentSelected(environment: string) {
         setEnviromentSelected(environment);
@@ -78,10 +80,14 @@ export function PlantSelect() {
 
             setPlants(data);
             setFilteredPlants(data);
+            setLoading(false);
         }
 
         fetchPlants();
     }, []); // API Request Plants
+
+    if (loading)
+        return <Load />
 
     return (
         <View style={styles.container}>
