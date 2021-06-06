@@ -1,7 +1,7 @@
 import React from "react";
 import {
   StyleSheet,
-  View,
+  Image,
   Text
 } from "react-native";
 import { RectButton, RectButtonProps } from "react-native-gesture-handler";
@@ -23,6 +23,7 @@ export const PlantCardPrimay = ({ data, ...rest }: PlantProps) => {
       style={styles.container}
       {...rest}
     >
+      <Image source={{uri: data.photo}} />
       <Text style={styles.text}>
         {data.name}
       </Text>
