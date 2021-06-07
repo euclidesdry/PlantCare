@@ -13,6 +13,8 @@ import {
     Keyboard
 } from 'react-native';
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // styles
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
@@ -43,9 +45,11 @@ export function UserIdentification() {
         setName(value)
     }
 
-    function handleConfirmation() {
+    async function handleConfirmation() {
         if(!name)
         return Alert.alert('Me diz como eu posso Chamar Você 😞');
+
+        await AsyncStorage.setItem('@plantcare:userName', name)
 
         navigation.navigate('Confirmation');
     }
