@@ -7,6 +7,7 @@ import {
     Image,
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
+    Alert,
     Platform,
     StyleSheet,
     Keyboard
@@ -43,6 +44,9 @@ export function UserIdentification() {
     }
 
     function handleConfirmation() {
+        if(!name)
+        return Alert.alert('Me diz como eu posso Chamar Você 😞');
+
         navigation.navigate('Confirmation');
     }
 
@@ -81,7 +85,7 @@ export function UserIdentification() {
                                 <Button
                                     title="Confirmar"
                                     onPress={() => {
-                                        (isFilled) ? handleConfirmation() : alert('Escreva o seu nome e clica no "OK" para continuar!');
+                                        handleConfirmation()
                                     }}
                                     accessible={isFilled}
                                 />

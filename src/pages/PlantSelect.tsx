@@ -152,7 +152,7 @@ export function PlantSelect() {
                     onEndReachedThreshold={0.1}
                     onEndReached={({ distanceFromEnd }) => handleFetchMore(distanceFromEnd)}
                     ListFooterComponent={
-                        loadingMore ? <ActivityIndicator color={colors.green} /> : <></>
+                        loadingMore ? <ActivityIndicator color={colors.green} size="large" /> : <></>
                     }
                 />
             </View>
