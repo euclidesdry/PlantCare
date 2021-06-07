@@ -12,6 +12,8 @@ import {
 import { SvgFromUri } from 'react-native-svg';
 import { getStatusBarHeight as getIphoneXStatusBarHeight} from "react-native-iphone-x-helper";
 import { useRoute, } from "@react-navigation/core";
+import DateTimePiker, { Event } from "@react-native-community/datetimepicker";
+
 // Assets
 import waterdrop from '../assets/waterdrop.png';
 import colors from "../styles/colors";
@@ -19,6 +21,7 @@ import fonts from "../styles/fonts";
 
 // Components
 import { Button } from "../components/Button";
+import useState from 'react';
 
 interface Params {
     id: string;
@@ -34,8 +37,12 @@ interface Params {
 }
 
 export function PlantSave () {
+    const [selectedDateTime, setSelectedDateTime] = useState( new Date());
+    const [showDatePicker, setShowDatePicker] = useState(Platform.OS ) // Bug to Solve
+
     const route = useRoute();
     const { plant } = route.params as Params;
+
     return (
         <View style={styles.container}>
             <View style={styles.plantInfo}>
@@ -70,7 +77,13 @@ export function PlantSave () {
                     Escolha o melhor horário para ser lembrado
                 </Text>
 
-                <Button title="Cadastrar Planta" />
+                <DateTimePiker
+
+
+                <Button
+                    title="Cadastrar Planta"
+                    onPress={() => {}}
+                />
             </View>
         </View>
     )
