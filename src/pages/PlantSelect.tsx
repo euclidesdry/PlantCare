@@ -6,6 +6,7 @@ import {
     StyleSheet,
     ActivityIndicator
 } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 
 // Styles
 import colors from '../styles/colors';
@@ -19,6 +20,7 @@ import { Load } from '../components/Load';
 
 //API's
 import api from '../services/api';
+
 
 interface EnviromentProps {
     key: string;
@@ -47,7 +49,8 @@ export function PlantSelect() {
 
     const [page, setPage] = useState(1);
     const [loadingMore, setLoadingMore] = useState(false);
-    const [loadedAll, setLoadedAll] = useState(false);
+
+    const navigation = useNavigation();
 
     function handleEnviromentSelected(environment: string) {
         setEnviromentSelected(environment);
@@ -67,6 +70,10 @@ export function PlantSelect() {
         setLoadingMore(true);
         setPage(oldValue => oldValue + 1);
         fetchPlants();
+    }
+
+    function handlePlantSelect(plant: PlantsProps) {
+        navigation.navigate('PlantSave', { plant });
     }
 
     async function fetchPlants() {
@@ -127,9 +134,9 @@ export function PlantSelect() {
             <View>
                 <FlatList
                     data={enviroments}
+                    keyExtractor={(item) => item.key}
                     renderItem={({ item }) => (
                         <EnviromentButton
-                            key={item.key}
                             title={item.title}
                             active={item.key === enviromentSelected}
                             onPress={() => handleEnviromentSelected(item.key)}
@@ -144,8 +151,12 @@ export function PlantSelect() {
             <View style={styles.plants}>
                 <FlatList
                     data={filteredPlants}
+                    keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <PlantCardPrimay data={item}/>
+                        <PlantCardPrimay
+                            data={item}
+                            onPress={() => handlePlantSelect(item)}
+                        />
                     )}
                     showsVerticalScrollIndicator={false}
                     numColumns={2}
