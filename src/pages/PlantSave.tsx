@@ -55,7 +55,6 @@ export function PlantSave () {
             
             return Alert.alert('Escolha uma hora no futuro! 🕞')
         } 
-        
         if (dateTime)
             setSelectedDateTime(dateTime);
     }
