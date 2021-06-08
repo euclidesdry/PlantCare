@@ -16,7 +16,7 @@ import DateTimePiker, { Event } from "@react-native-community/datetimepicker";
 import { format, isBefore } from "date-fns";
 
 // Libs
-import { PlantProps } from "../libs/storage";
+import { loadPlant, PlantProps, savePlant } from "../libs/storage";
 
 // Assets
 import waterdrop from '../assets/waterdrop.png';
@@ -53,6 +53,17 @@ export function PlantSave () {
 
     function handleOpenDateTimePikerForAndroid() {
         setShowDatePicker(oldState => !oldState);
+    }
+
+    async function handleSavePlant() {
+        try {
+            await savePlant({
+                ...plant,
+                dateTimeNitification: selectedDateTime
+            })
+        } catch {
+            Alert.alert('Erro: Não foi possível salvar esta planta! 😢');
+        }
     }
 
     return (
@@ -120,7 +131,7 @@ export function PlantSave () {
 
                 <Button
                     title="Cadastrar Planta"
-                    onPress={() => {}}
+                    onPress={handleSavePlant}
                 />
             </View>
         </View>
