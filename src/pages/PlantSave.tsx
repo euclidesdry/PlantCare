@@ -93,12 +93,16 @@ export function PlantSave () {
                     Escolha o melhor horário para ser lembrado
                 </Text>
 
-                <DateTimePiker
-                    value={selectedDateTime}
-                    mode="time"
-                    display="spinner"
-                    onChange={handleChangeTime}
-                />
+                {
+                    showDatePicker && (
+                        <DateTimePiker
+                            value={selectedDateTime}
+                            mode="time"
+                            display="spinner"
+                            onChange={handleChangeTime}
+                        />
+                    )
+                }
 
                 <Button
                     title="Cadastrar Planta"
