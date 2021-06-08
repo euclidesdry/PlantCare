@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -19,6 +20,7 @@ const AuthRoutes = () => {
         inactiveTintColor: colors.heading,
         labelPosition: 'beside-icon',
         style: {
+          paddingTop: Platform.OS === 'android' ? 0 : 20, 
           paddingVertical: 20,
           height: 88
         }
@@ -30,7 +32,7 @@ const AuthRoutes = () => {
         options={{
           tabBarIcon: (({ size, color}) => (
             <MaterialIcons
-              name="format-list-bulleted"
+              name="add-circle-outline"
               size={size}
               color={color}
             />))
