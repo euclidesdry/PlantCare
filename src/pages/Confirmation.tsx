@@ -9,7 +9,7 @@ import {
     Platform,
     StyleSheet
 } from "react-native";
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 
 // Styles
 import colors from "../styles/colors";
@@ -18,27 +18,49 @@ import fonts from "../styles/fonts";
 // Components
 import { Button } from "../components/Button";
 
+interface Params {
+    title: string;
+    subtitle: string;
+    buttonTitle: string;
+    icon: 'smile' | 'hug';
+    nextScreen: string;
+}
+
+const emojis = {
+    hug: '🤗',
+    smile: '😃'
+}
+
 export function Confirmation() {
 
     const navigation = useNavigation();
+    const routes = useRoute();
+
+    const {
+        title,
+        subtitle,
+        buttonTitle,
+        icon,
+        nextScreen
+    } = routes.params as Params;
 
     function handleMoveOn() {
-        navigation.navigate('PlantSelect');
+        navigation.navigate(nextScreen);
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
                 <Text style={styles.emoji}>
-                    😄
+                    {emojis[icon]}
                 </Text>
 
                 <Text style={styles.title}>
-                    Tudo Preparado!
+                    {title}
                 </Text>
 
                 <Text style={styles.subtitle}>
-                    Agora vomos começar a cuidar das suas plantinhas com muito carinho.
+                    {subtitle}
                 </Text>
 
                 <View style={styles.footer}>

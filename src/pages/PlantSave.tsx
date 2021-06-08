@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { SvgFromUri } from 'react-native-svg';
 import { getStatusBarHeight as getIphoneXStatusBarHeight} from "react-native-iphone-x-helper";
-import { useRoute, } from "@react-navigation/core";
+import { useRoute, useNavigation } from "@react-navigation/core";
 import DateTimePiker, { Event } from "@react-native-community/datetimepicker";
 import { format, isBefore } from "date-fns";
 
@@ -30,7 +30,9 @@ interface Params {
     plant: PlantProps
 }
 
-export function PlantSave () {
+export function PlantSave() {
+    const navigation = useNavigation();
+
     const [selectedDateTime, setSelectedDateTime] = useState( new Date());
     const [showDatePicker, setShowDatePicker] = useState(Platform.OS == 'ios') // Bug to Solve
 
@@ -61,6 +63,14 @@ export function PlantSave () {
                 ...plant,
                 dateTimeNitification: selectedDateTime
             })
+
+            navigation.navigate('Confirmation', {
+                title: 'Concluído!',
+                subtitle: 'Fique descançado que vamos lembrar você de quando deve cuidar da sua plantinha cuidadosamente.',
+                buttonTitle: 'Muito Obrigado :D',
+                icon: 'hug',
+                nextScreen: 'MyPlant'
+            });
         } catch {
             Alert.alert('Erro: Não foi possível salvar esta planta! 😢');
         }

@@ -51,7 +51,13 @@ export function UserIdentification() {
 
         try {
             await AsyncStorage.setItem('@plantcare:userName', name)
-            navigation.navigate('Confirmation');
+            navigation.navigate('Confirmation', {
+                title: 'Tudo Preparado!',
+                subtitle: 'Agora vomos começar a cuidar das suas plantinhas com muito carinho.',
+                buttonTitle: 'Iniciar',
+                icon: 'smile',
+                nextScreen: 'PlantSelect'
+            });
         } catch {
             Alert.alert('Ooops!: Devido a um erro interno não foi possível salvar o seu nome. 😞');
         }
