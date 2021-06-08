@@ -13,7 +13,7 @@ import { SvgFromUri } from 'react-native-svg';
 import { getStatusBarHeight as getIphoneXStatusBarHeight} from "react-native-iphone-x-helper";
 import { useRoute, } from "@react-navigation/core";
 import DateTimePiker, { Event } from "@react-native-community/datetimepicker";
-import { isBefore } from "date-fns";
+import { format, isBefore } from "date-fns";
 
 // Assets
 import waterdrop from '../assets/waterdrop.png';
@@ -59,6 +59,10 @@ export function PlantSave () {
             setSelectedDateTime(dateTime);
     }
 
+    function handleOpenDateTimePikerForAndroid() {
+        setShowDatePicker(oldState => !oldState);
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.plantInfo}>
@@ -101,6 +105,24 @@ export function PlantSave () {
                             display="spinner"
                             onChange={handleChangeTime}
                         />
+                    )
+                }
+
+                {
+                    Platform.OS === 'android' && (
+                        <>
+                            <Text style={styles.dateTimePikerTimeBox}>
+                                {`${format(selectedDateTime, 'HH')}h:${format(selectedDateTime, 'mm')}min`}
+                            </Text>
+                            <TouchableOpacity
+                                style={styles.dateTimePikerButton}
+                                onPress={handleOpenDateTimePikerForAndroid}
+                            >
+                                <Text style={styles.dateTimePikerText}>
+                                    Mudar Horário
+                                </Text>
+                            </TouchableOpacity>
+                        </>
                     )
                 }
 
@@ -174,5 +196,32 @@ const styles = StyleSheet.create({
         color: colors.heading,
         fontSize: 12,
         marginBottom: 5
+    },
+    dateTimePikerTimeBox: {
+        width: '100%',
+        alignItems: 'center',
+        alignContent: 'center',
+        textAlign: 'center',
+        paddingHorizontal: 10,
+        paddingVertical: 20,
+        paddingTop: 10,
+        fontFamily: fonts.heading,
+        color: colors.green_dark,
+        fontSize: 38
+    },
+    dateTimePikerButton: {
+        width: '100%',
+        alignItems: 'center',
+        paddingVertical: 30,
+        paddingTop: 0
+    },
+    dateTimePikerText: {
+        color: colors.heading,
+        fontSize: 24,
+        backgroundColor: '#f8f8f8',
+        borderRadius: 10,
+        padding: 10,
+        paddingHorizontal: 24,
+        fontFamily: fonts.text
     }
 })
