@@ -53,7 +53,7 @@ export function UserIdentification() {
             await AsyncStorage.setItem('@plantcare:userName', name)
             navigation.navigate('Confirmation');
         } catch {
-            Alert.alert('Ooops!: Não foi possível salvar o seu nome. 😞');
+            Alert.alert('Ooops!: Devido a um erro interno não foi possível salvar o seu nome. 😞');
         }
     }
 
