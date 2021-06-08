@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { 
     Alert,
     StyleSheet,
@@ -13,6 +13,7 @@ import { SvgFromUri } from 'react-native-svg';
 import { getStatusBarHeight as getIphoneXStatusBarHeight} from "react-native-iphone-x-helper";
 import { useRoute, } from "@react-navigation/core";
 import DateTimePiker, { Event } from "@react-native-community/datetimepicker";
+import { isBefore } from "date-fns";
 
 // Assets
 import waterdrop from '../assets/waterdrop.png';
@@ -21,27 +22,43 @@ import fonts from "../styles/fonts";
 
 // Components
 import { Button } from "../components/Button";
-import useState from 'react';
 
 interface Params {
-    id: string;
-    name: string;
-    about: string;
-    water_tips: string;
-    photo: string;
-    environments: [string];
-    frequency: {
-        times: number,
-        repeat_every: string
-    };
+    plant: {
+        id: string;
+        name: string;
+        about: string;
+        water_tips: string;
+        photo: string;
+        environments: [string];
+        frequency: {
+            times: number,
+            repeat_every: string
+        }
+    }
 }
 
 export function PlantSave () {
     const [selectedDateTime, setSelectedDateTime] = useState( new Date());
-    const [showDatePicker, setShowDatePicker] = useState(Platform.OS ) // Bug to Solve
+    const [showDatePicker, setShowDatePicker] = useState(Platform.OS == 'ios') // Bug to Solve
 
     const route = useRoute();
     const { plant } = route.params as Params;
+
+    function handleChangeTime(event: Event, dateTime: Date | undefined) {
+        if(Platform.OS === 'android') {
+            setShowDatePicker(oldState => !oldState);
+        }
+
+        if(dateTime && isBefore(dateTime, new Date())) {
+            setSelectedDateTime(new Date());
+            
+            return Alert.alert('Escolha uma hora no futuro! 🕞')
+        } 
+        
+        if (dateTime)
+            setSelectedDateTime(dateTime);
+    }
 
     return (
         <View style={styles.container}>
@@ -78,7 +95,11 @@ export function PlantSave () {
                 </Text>
 
                 <DateTimePiker
-
+                    value={selectedDateTime}
+                    mode="time"
+                    display="spinner"
+                    onChange={handleChangeTime}
+                />
 
                 <Button
                     title="Cadastrar Planta"
