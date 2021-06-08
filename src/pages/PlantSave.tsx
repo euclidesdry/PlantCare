@@ -16,7 +16,7 @@ import DateTimePiker, { Event } from "@react-native-community/datetimepicker";
 import { format, isBefore } from "date-fns";
 
 // Libs
-import { loadPlant, PlantProps, savePlant } from "../libs/storage";
+import { PlantProps, savePlant } from "../libs/storage";
 
 // Assets
 import waterdrop from '../assets/waterdrop.png';
@@ -61,15 +61,15 @@ export function PlantSave() {
         try {
             await savePlant({
                 ...plant,
-                dateTimeNitification: selectedDateTime
+                dateTimeNotification: selectedDateTime
             })
 
             navigation.navigate('Confirmation', {
-                title: 'Concluído!',
+                title: 'Planta Cadastrada Correctamente!',
                 subtitle: 'Fique descançado que vamos lembrar você de quando deve cuidar da sua plantinha cuidadosamente.',
-                buttonTitle: 'Muito Obrigado :D',
+                buttonTitle: 'Visualizar Planta(s)',
                 icon: 'hug',
-                nextScreen: 'MyPlant'
+                nextScreen: 'MyPlants'
             });
         } catch {
             Alert.alert('Erro: Não foi possível salvar esta planta! 😢');
