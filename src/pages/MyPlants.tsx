@@ -18,6 +18,7 @@ import waterdrop from '../assets/waterdrop.png';
 
 // Components
 import { Header } from "../components/Header";
+import { PlantCardSecondary } from '../components/PlantCardSecondary';
 
 // Libs
 import { loadPlant, PlantProps } from '../libs/storage';
@@ -72,7 +73,7 @@ export function MyPlants() {
           data={myPlants}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
-            <Text>Elemento</Text>
+            <PlantCardSecondary data={item}/>
           )}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{flex: 1}}
@@ -107,8 +108,7 @@ const styles = StyleSheet.create({
   spotlightText: {
     flex: 1,
     color: colors.blue,
-    paddingHorizontal: 20,
-    textAlign: 'justify'
+    paddingHorizontal: 20
   },
   plants: {
     flex: 1,
@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   plantsTitle: {
     fontSize: 24,
     fontFamily: fonts.heading,
-    color: colors.heading
+    color: colors.heading,
+    marginVertical: 20
   }
 })
