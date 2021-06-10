@@ -4,7 +4,9 @@ import {
   Text,
   Image,
   FlatList,
-  StyleSheet
+  StyleSheet,
+  Alert,
+  ScrollView
 } from "react-native";
 import { formatDistance } from "date-fns";
 import { pt } from "date-fns/locale";
@@ -22,13 +24,37 @@ import { PlantCardSecondary } from '../components/PlantCardSecondary';
 import { Load } from "../components/Load";
 
 // Libs
-import { loadPlant, PlantProps } from '../libs/storage';
+import { loadPlant, PlantProps, removePlant } from '../libs/storage';
 
 export function MyPlants() {
 
   const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [nextWaterd, setNextWaterd] = useState<string>();
+
+  function handleRemove(plant: PlantProps) {
+    Alert.alert('Remover', `Deseja remover a Planta "${plant.name}" da lista de Lembretes?`, [
+      {
+        text: 'Não 🙏',
+        style: 'cancel'
+      },
+      {
+        text: 'Sim 😢',
+        onPress: async () => {
+          try {
+            await removePlant(plant.id);
+
+            setMyPlants((oldData) => 
+              oldData.filter((item) => item.id !== plant.id)
+            );
+
+          } catch (error) {
+            Alert.alert(`Erro: Não foi possível Remover a Planta "${plant.name}"! \n 😢`)
+          }
+        }
+      }
+    ])
+  }
 
   useEffect(() => {
     async function loadStorageData() {
@@ -70,14 +96,17 @@ export function MyPlants() {
 
       <View style={styles.plants}>
         <Text style={styles.plantsTitle}>
-          Proximas Regadas
+          Próximas para Regar
         </Text>
 
         <FlatList
           data={myPlants}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
-            <PlantCardSecondary data={item}/>
+            <PlantCardSecondary
+              data={item}
+              handleRemove={() => {handleRemove(item)}}
+            />
           )}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{flex: 1}}
