@@ -19,6 +19,7 @@ import waterdrop from '../assets/waterdrop.png';
 // Components
 import { Header } from "../components/Header";
 import { PlantCardSecondary } from '../components/PlantCardSecondary';
+import { Load } from "../components/Load";
 
 // Libs
 import { loadPlant, PlantProps } from '../libs/storage';
@@ -40,7 +41,7 @@ export function MyPlants() {
       );
 
       setNextWaterd(
-        `Não esqueça de regar a ${plantsStoraged[0].name} à(s) ${nextTime} hora(s).`
+        `Não esqueça de regar a ${plantsStoraged[0].name} à ${nextTime}.`
       );
 
       setMyPlants(plantsStoraged);
@@ -49,6 +50,9 @@ export function MyPlants() {
 
     loadStorageData();
   }, []); // Load Storaged Data about Plants saved for Take Care
+
+  if (loading)
+        return <Load />
 
   return (
     <View style={styles.container}>

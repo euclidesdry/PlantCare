@@ -77,74 +77,79 @@ export function PlantSave() {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.plantInfo}>
-                <SvgFromUri
-                    uri={plant.photo}
-                    height={150}
-                    width={150}
-                />
-
-                <Text style={styles.plantName}>
-                    {plant.name}
-                </Text>
-
-                <Text style={styles.plantAbout}>
-                    {plant.about}
-                </Text>
-            </View>
-
-            <View style={styles.controller}>
-                <View style={styles.tipContainer}>
-                    <Image
-                        source={waterdrop}
-                        style={styles.tipImage}
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.container}
+        >
+            <View style={styles.container}>
+                <View style={styles.plantInfo}>
+                    <SvgFromUri
+                        uri={plant.photo}
+                        height={150}
+                        width={150}
                     />
 
-                    <Text style={styles.tipText}>
-                        {plant.water_tips}
+                    <Text style={styles.plantName}>
+                        {plant.name}
+                    </Text>
+
+                    <Text style={styles.plantAbout}>
+                        {plant.about}
                     </Text>
                 </View>
 
-                <Text style={styles.alertLabel}>
-                    Escolha o melhor horário para ser lembrado
-                </Text>
-
-                {
-                    showDatePicker && (
-                        <DateTimePiker
-                            value={selectedDateTime}
-                            mode="time"
-                            display="spinner"
-                            onChange={handleChangeTime}
+                <View style={styles.controller}>
+                    <View style={styles.tipContainer}>
+                        <Image
+                            source={waterdrop}
+                            style={styles.tipImage}
                         />
-                    )
-                }
 
-                {
-                    Platform.OS === 'android' && (
-                        <>
-                            <Text style={styles.dateTimePikerTimeBox}>
-                                {`${format(selectedDateTime, 'HH')}h:${format(selectedDateTime, 'mm')}min`}
-                            </Text>
-                            <TouchableOpacity
-                                style={styles.dateTimePikerButton}
-                                onPress={handleOpenDateTimePikerForAndroid}
-                            >
-                                <Text style={styles.dateTimePikerText}>
-                                    Mudar Horário
+                        <Text style={styles.tipText}>
+                            {plant.water_tips}
+                        </Text>
+                    </View>
+
+                    <Text style={styles.alertLabel}>
+                        Escolha o melhor horário para ser lembrado
+                    </Text>
+
+                    {
+                        showDatePicker && (
+                            <DateTimePiker
+                                value={selectedDateTime}
+                                mode="time"
+                                display="spinner"
+                                onChange={handleChangeTime}
+                            />
+                        )
+                    }
+
+                    {
+                        Platform.OS === 'android' && (
+                            <>
+                                <Text style={styles.dateTimePikerTimeBox}>
+                                    {`${format(selectedDateTime, 'HH')}h:${format(selectedDateTime, 'mm')}min`}
                                 </Text>
-                            </TouchableOpacity>
-                        </>
-                    )
-                }
+                                <TouchableOpacity
+                                    style={styles.dateTimePikerButton}
+                                    onPress={handleOpenDateTimePikerForAndroid}
+                                >
+                                    <Text style={styles.dateTimePikerText}>
+                                        Mudar Horário
+                                    </Text>
+                                </TouchableOpacity>
+                            </>
+                        )
+                    }
 
-                <Button
-                    title="Cadastrar Planta"
-                    onPress={handleSavePlant}
-                />
+                    <Button
+                        title="Cadastrar Planta"
+                        onPress={handleSavePlant}
+                    />
+                </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
