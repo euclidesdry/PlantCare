@@ -28,7 +28,7 @@ export const PlantCardSecondary = ({ data, handleRemove, ...rest }: PlantProps) 
   return (
     <Swipeable
       overshootRight={true}
-      overshootFriction={8}
+      overshootFriction={4}
       renderRightActions={() => (
         <Animated.View>
           <View>
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 90,
     backgroundColor: colors.red,
-    marginTop: 9,
+    marginTop: 10,
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 90,
     backgroundColor: colors.green,
-    marginTop: 9,
+    marginTop: 10,
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
